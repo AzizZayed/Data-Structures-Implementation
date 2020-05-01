@@ -15,7 +15,7 @@ import java.lang.IndexOutOfBoundsException;
  * last Node.
  * 
  * @author Zayed
- *
+ * 
  */
 public class BasicLinkedList {
 
@@ -29,6 +29,11 @@ public class BasicLinkedList {
 		public Node next;
 		public int value;
 
+		/**
+		 * constructor
+		 * 
+		 * @param value - value of the node
+		 */
 		public Node(int value) {
 			this.value = value;
 			next = null;
@@ -38,9 +43,12 @@ public class BasicLinkedList {
 		 * print the node and the children
 		 */
 		public void print() {
-			System.out.print(value + ", ");
-			if (next != null)
+			if (next == null)
+				System.out.print(value + "]");
+			else {
+				System.out.print(value + ", ");
 				next.print();
+			}
 		}
 
 		/**
@@ -101,9 +109,11 @@ public class BasicLinkedList {
 	 * print linked list
 	 */
 	public void print() { // O(n)
-		if (head != null) {
+		System.out.print("[");
+		if (head == null)
+			System.out.print("]");
+		else
 			head.print();
-		}
 		System.out.println();
 	}
 
@@ -159,21 +169,33 @@ public class BasicLinkedList {
 	 * size of the list
 	 * 
 	 * @param index - the index at which you want to retrieve an element
-	 * @return the value at the specified indexF
+	 * @return the value at the specified index
 	 */
 	public int get(int index) { // O(index), O(n) worst case
+		return getNode(head, index).value;
+	}
+
+	/**
+	 * get the node at the specified index, this method throws a
+	 * IndexOutOfBoundsException if the index is not bounded to between 0 and the
+	 * size of the list
+	 * 
+	 * @param top   - the head of the list to divide
+	 * @param index - the index at which you want to retrieve the node
+	 * @return the node at the specified index
+	 */
+	private Node getNode(Node top, int index) {
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
 		if (index == 0)
-			return head.value;
+			return top;
 
-		Node current = head.next;
-		for (int i = 1; i < index; i++) {
+		Node current = top.next;
+		for (int i = 1; i < index; i++)
 			current = current.next;
-		}
 
-		return current.value;
+		return current;
 	}
 
 	/**
@@ -182,7 +204,7 @@ public class BasicLinkedList {
 	 * 
 	 * @return the value at the head of the list
 	 */
-	public int pop() { // O(1)
+	public int popHead() { // O(1)
 		if (head != null) {
 			Node poppedHead = head;
 			head = head.next;
@@ -225,7 +247,7 @@ public class BasicLinkedList {
 			return;
 
 		if (head.value == val)
-			pop();
+			popHead();
 		else if (head.removeValue(val))
 			size--;
 	}
@@ -242,7 +264,7 @@ public class BasicLinkedList {
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
 		if (index == 0)
-			pop();
+			popHead();
 		else if (index == size - 1)
 			removeLast();
 		else {
@@ -280,9 +302,8 @@ public class BasicLinkedList {
 
 			newNode.next = current.next;
 			current.next = newNode;
+			size++;
 		}
-
-		size++;
 	}
 
 	/**
@@ -334,6 +355,15 @@ public class BasicLinkedList {
 	}
 
 	/**
+	 * test if the list is empty
+	 * 
+	 * @return true if the list is empty
+	 */
+	public boolean isEmpty() {
+		return (size == 0);
+	}
+
+	/**
 	 * transform the linked list into an array
 	 * 
 	 * @return the array containing the elements of the list
@@ -357,7 +387,7 @@ public class BasicLinkedList {
 	}
 
 	/**
-	 * reverse the linked list
+	 * reverse the linked list into a separate linked list
 	 * 
 	 * @return the reversed linked list
 	 */
@@ -379,7 +409,99 @@ public class BasicLinkedList {
 	/**
 	 * reverse this linked list
 	 */
-	public void internalReverse() { // Ot(n), Os(n)
-		head = reverse().head;
+	public void internalReverse() { // Ot(n), Os(1)
+		Node previous, current, next;
+
+		previous = null;
+		current = head;
+		next = null;
+		while (current != null) {
+			next = current.next;
+			current.next = previous;
+			previous = current;
+			current = next;
+		}
+
+		head = previous;
+	}
+
+	/**
+	 * sort the array using merge sort
+	 */
+	public void sort() { // Ot(nlogn), Os(n)
+		if (head == null || size < 2)
+			return;
+
+		head = divide(head, size);
+	}
+
+	/**
+	 * divide the list, division part of merge sort
+	 *
+	 * @param top     - the head of the list to divide
+	 * @param divSize - the size of the given list (top)
+	 * @return head node of merged list
+	 */
+	private Node divide(Node top, int divSize) {
+		if (top == null || top.next == null || divSize <= 0)
+			return top;
+
+		int subSize = (divSize) / 2; // size of sub division
+
+		Node centerNode = getNode(top, subSize - 1);
+		Node rightList = centerNode.next;
+		centerNode.next = null;
+
+		Node left = divide(top, subSize);
+		Node right = divide(rightList, subSize + (divSize % 2));
+
+		return merge(left, right);
+	}
+
+	/**
+	 * merge the divided lists, merge part of merge sort
+	 *
+	 * @param left  - left node/list to merge
+	 * @param right - right node/list to merge
+	 * @return head node of merged list
+	 */
+	private Node merge(Node left, Node right) {
+		if (left == null)
+			return right;
+		if (right == null)
+			return left;
+
+		Node mergedList = null; // head of the list to return
+
+		Node leftPtr = left;
+		Node rightPtr = right;
+		Node previous = null;
+		while (leftPtr != null && rightPtr != null) {
+			Node current;
+
+			if (leftPtr.value > rightPtr.value) {
+				current = new Node(rightPtr.value);
+				rightPtr = rightPtr.next;
+			} else {
+				current = new Node(leftPtr.value);
+				leftPtr = leftPtr.next;
+			}
+
+			if (mergedList == null) {
+				mergedList = current;
+			} else {
+				previous.next = current;
+			}
+
+			previous = current;
+		}
+
+		if (leftPtr == null) {
+			previous.next = rightPtr;
+		} else {
+			previous.next = leftPtr;
+		}
+
+		return mergedList;
 	}
 }
