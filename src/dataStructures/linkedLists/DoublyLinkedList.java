@@ -1,126 +1,138 @@
 package dataStructures.linkedLists;
 
 /**
- * This is a basic LinkedList class with all the necessary functions a
- * LinkedList class - or any data structure - would have. All the time and space
- * complexities are written beside the functions. Some optimizations can be done
- * to this class. For example, if it had a pointer to the last element of the
- * list, the append() and peekLast() functions would run in constant time
- * instead of linear time. The removeLast() method can also be optimized if we
- * had this pointer and also a pointer to the parent node. Most of these
- * performance issues are solved with a double linked list with a pointer to the
- * last Node.
+ * a linked list with each node referencing parent and child. This is more
+ * efficient than a single linked list time-wise but not space-wise
  * 
  * @author Zayed
- * 
+ *
  */
-public class BasicLinkedList {
+public class DoublyLinkedList {
 
 	/**
-	 * The node class: the elements of the list
+	 * The double node class: the elements of the doubly linked lists
 	 * 
 	 * @author Zayed
 	 *
 	 */
-	private class Node {
-		public Node next;
-		public int value;
+	private class DoubleNode {
+		public DoubleNode parent, next; // pointers to surrounding nodes
+		public int value; // value of the node
 
 		/**
 		 * constructor
 		 * 
 		 * @param value - value of the node
 		 */
-		public Node(int value) {
+		public DoubleNode(int value) {
 			this.value = value;
-			next = null;
+			next = parent = null;
 		}
 
 		/**
 		 * print the node and the children
 		 */
-		public void print() {
+		public void printForwards() {
 			if (next == null)
 				System.out.print(value + "]");
 			else {
 				System.out.print(value + ", ");
-				next.print();
+				next.printForwards();
 			}
 		}
 
 		/**
-		 * Add the value to the end
-		 * 
-		 * @param val - value to add
+		 * print the node and the children
 		 */
-		public void add(int val) {
-			if (next == null) {
-				next = new Node(val);
-			} else {
-				next.add(val);
+		public void printBackwards() {
+			if (parent == null)
+				System.out.print(value + "]");
+			else {
+				System.out.print(value + ", ");
+				parent.printBackwards();
 			}
 		}
 	}
 
-	private Node head; // root
-	private int size = 0; // size of the list
+	private DoubleNode head, tail; // root and last element;
+	private int size; // size of the list
 
 	/**
 	 * print linked list
 	 */
 	public void print() { // O(n)
-		System.out.print("[");
+		System.out.print("\nForward: [");
 		if (head == null)
 			System.out.print("]");
 		else
-			head.print();
+			head.printForwards();
+		System.out.print(" \nBackward: [");
+		if (tail == null)
+			if (head != null)
+				head.printBackwards();
+			else
+				System.out.print("]");
+		else
+			tail.printBackwards();
 		String h = head == null ? "null" : Integer.toString(head.value);
-		System.out.println(" \nHead: " + h);
+		String t = tail == null ? "null" : Integer.toString(tail.value);
+		System.out.println(" \nHead: " + h + ", Tail: " + t);
 	}
 
 	/**
 	 * add value to the end of the list
 	 * 
-	 * @param val - value to add
+	 * @param value - value to add
 	 */
-	public void append(int val) { // O(n)
+	public void append(int value) { // O(1)
 		if (head == null) {
-			head = new Node(val);
+			head = new DoubleNode(value);
+		} else if (tail == null) {
+			tail = new DoubleNode(value);
+			tail.parent = head;
+			head.next = tail;
 		} else {
-			head.add(val);
+			DoubleNode newTail = new DoubleNode(value);
+			newTail.parent = tail;
+			tail.next = newTail;
+			tail = newTail;
 		}
-
 		size++;
 	}
 
 	/**
 	 * add value to the start of the array
 	 * 
-	 * @param val - value to add
+	 * @param value - value to add
 	 */
-	public void prepend(int val) { // O(1)
+	public void prepend(int value) { // O(1)
 		if (head == null) {
-			head = new Node(val);
+			head = new DoubleNode(value);
+		} else if (tail == null) {
+			tail = head;
+			head = new DoubleNode(value);
+			head.next = tail;
+			tail.parent = head;
 		} else {
-			Node newHead = new Node(val);
+			DoubleNode newHead = new DoubleNode(value);
 			newHead.next = head;
+			head.parent = newHead;
 			head = newHead;
 		}
-
 		size++;
 	}
 
 	/**
 	 * check if the list contains a value
 	 * 
-	 * @param val - value to add
+	 * @param value - value to add
 	 * @return true if the list contains the value, false otherwise
 	 */
-	public boolean contains(int val) { // O(n) worst case
+	public boolean contains(int value) { // O(n) worst case
 		if (head != null) {
-			Node current = head;
+			DoubleNode current = head;
 			while (current != null) {
-				if (current.value == val)
+				if (current.value == value)
 					return true;
 				current = current.next;
 			}
@@ -134,7 +146,7 @@ public class BasicLinkedList {
 	 * @param index - the index at which you want to retrieve an element
 	 * @return the value at the specified index
 	 */
-	public int get(int index) { // O(index), O(n) worst case
+	public int get(int index) {
 		return getNode(head, index).value;
 	}
 
@@ -147,17 +159,26 @@ public class BasicLinkedList {
 	 * @param index - the index at which you want to retrieve the node
 	 * @return the node at the specified index
 	 */
-	private Node getNode(Node top, int index) {
+	private DoubleNode getNode(DoubleNode top, int index) { // O(n/2) worst case ~ O(n) 
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
-		if (index == 0)
-			return top;
+		DoubleNode current;
+		if (index <= size / 2) {
+			if (index == 0)
+				return top;
 
-		Node current = top.next;
-		for (int i = 1; i < index; i++)
-			current = current.next;
+			current = top.next;
+			for (int i = 1; i < index; i++)
+				current = current.next;
+		} else {
+			if (index == size - 1)
+				return tail;
 
+			current = tail.parent;
+			for (int i = size - 2; i > index; i--)
+				current = current.parent;
+		}
 		return current;
 	}
 
@@ -169,34 +190,49 @@ public class BasicLinkedList {
 	 */
 	public int popHead() { // O(1)
 		if (head != null) {
-			Node poppedHead = head;
-			head = head.next;
+			int val = head.value;
+			if (tail == null) {
+				head = null;
+			} else {
+				head = head.next;
+				head.parent = null;
+			}
 			size--;
-			return poppedHead.value;
+			if (size == 1) {
+				tail = null;
+			}
+			return val;
 		}
 
 		throw new NullPointerException("List empty");
 	}
 
 	/**
+	 * pop the tail off the list
+	 * 
+	 * @return the value at the head of the list
+	 */
+	public int popTail() { // O(1)
+		if (size == 1)
+			return popHead();
+
+		int val = tail.value;
+		removeLast();
+		return val;
+	}
+
+	/**
 	 * remove the last element in the list
 	 */
-	public void removeLast() { // O(n)
-		if (head == null)
-			return;
-
+	public void removeLast() { // O(1)
 		if (size == 1)
-			head = null;
+			popHead();
 		else if (size == 2)
-			head.next = null;
+			tail = null;
 		else {
-			Node current = head;
-			while (current.next.next != null)
-				current = current.next;
-
-			current.next = null;
+			tail = tail.parent;
+			tail.next = null;
 		}
-
 		size--;
 	}
 
@@ -207,7 +243,7 @@ public class BasicLinkedList {
 	 * 
 	 * @param index - the index at which we wish to remove the element
 	 */
-	public void removeIndex(int index) { // O(index), O(n) worst case
+	public void removeIndex(int index) { // O(n/2) worst case ~ O(n) 
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
@@ -216,24 +252,24 @@ public class BasicLinkedList {
 		else if (index == size - 1)
 			removeLast();
 		else {
-			Node current = head;
-			for (int i = 0; i < index - 1; i++)
-				current = current.next;
-
-			current.next = current.next.next;
+			if (index <= size / 2) { // optimize for half the compute time
+				DoubleNode current = head;
+				for (int i = 0; i < index - 1; i++)
+					current = current.next;
+				current.next.next.parent = current;
+				current.next = current.next.next;
+			} else {
+				DoubleNode current = tail;
+				for (int i = size - 1; i > index + 1; i--)
+					current = current.parent;
+				current.parent.parent.next = current;
+				current.parent = current.parent.parent;
+			}
 			size--;
 		}
 	}
 
-	/**
-	 * insert a value at the specified index, this method throws a
-	 * IndexOutOfBoundsException if the index is not bounded to between 0 and the
-	 * size of the list
-	 * 
-	 * @param val   - value to add
-	 * @param index - the index at which we wish to add an element
-	 */
-	public void insert(int val, int index) { // O(index), O(n) worst case
+	public void insert(int val, int index) { // O(n/2) worst case ~ O(n) 
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
@@ -242,14 +278,29 @@ public class BasicLinkedList {
 		else if (index == size - 1)
 			append(val);
 		else {
-			Node newNode = new Node(val);
+			if (index <= size / 2) {
+				DoubleNode newNode = new DoubleNode(val);
 
-			Node current = head;
-			for (int i = 0; i < index - 1; i++)
-				current = current.next;
+				DoubleNode current = head;
+				for (int i = 0; i < index - 1; i++)
+					current = current.next;
 
-			newNode.next = current.next;
-			current.next = newNode;
+				newNode.parent = current;
+				newNode.next = current.next;
+				current.next.parent = newNode;
+				current.next = newNode;
+			} else {
+				DoubleNode newNode = new DoubleNode(val);
+
+				DoubleNode current = tail;
+				for (int i = size - 1; i > index + 1; i--)
+					current = current.parent;
+
+				newNode.parent = current.parent;
+				current.parent.next = newNode;
+				newNode.next = current;
+				current.parent = newNode;
+			}
 			size++;
 		}
 	}
@@ -273,23 +324,18 @@ public class BasicLinkedList {
 	 * 
 	 * @return the last element from the list
 	 */
-	public int peekLast() { // O(n)
-		if (head == null)
-			throw new NullPointerException("List empty");
-
-		Node current = head;
-		while (current.next != null) {
-			current = current.next;
-		}
-
-		return current.value;
+	public int peekLast() { // O(1)
+		if (tail != null)
+			return tail.value;
+		else
+			return peekFirst();
 	}
 
 	/**
 	 * clear the linked list
 	 */
 	public void clear() { // O(1)
-		head = null;
+		head = tail = null;
 		size = 0;
 	}
 
@@ -307,7 +353,7 @@ public class BasicLinkedList {
 	 * 
 	 * @return true if the list is empty
 	 */
-	public boolean isEmpty() {
+	public boolean isEmpty() { // O(1)
 		return (size == 0);
 	}
 
@@ -323,7 +369,7 @@ public class BasicLinkedList {
 		int[] list = new int[size];
 		int i = 0;
 
-		Node current = head;
+		DoubleNode current = head;
 		list[i] = head.value;
 
 		while (current.next != null) {
@@ -335,41 +381,22 @@ public class BasicLinkedList {
 	}
 
 	/**
-	 * reverse the linked list into a separate linked list
-	 * 
-	 * @return the reversed linked list
-	 */
-	public BasicLinkedList reverse() { // Ot(n), Os(n)
-		BasicLinkedList reversedList = new BasicLinkedList();
-
-		if (head == null)
-			return reversedList;
-
-		Node current = head;
-		while (current != null) {
-			reversedList.prepend(current.value);
-			current = current.next;
-		}
-
-		return reversedList;
-	}
-
-	/**
 	 * reverse this linked list
 	 */
 	public void internalReverse() { // Ot(n), Os(1)
-		Node previous, current, next;
-
-		previous = null;
-		current = head;
-		next = null;
+		DoubleNode previous = null;
+		DoubleNode current = head;
+		DoubleNode next = null;
 		while (current != null) {
 			next = current.next;
 			current.next = previous;
 			previous = current;
+			current.parent = null;
 			current = next;
+			previous.parent = current;
+			if (previous.next == null)
+				tail = previous;
 		}
-
 		head = previous;
 	}
 
@@ -381,6 +408,13 @@ public class BasicLinkedList {
 			return;
 
 		head = divide(head, size);
+
+		// find tail
+		DoubleNode curr = head;
+		while (curr.next != null)
+			curr = curr.next;
+
+		tail = curr;
 	}
 
 	/**
@@ -390,18 +424,18 @@ public class BasicLinkedList {
 	 * @param divSize - the size of the given list (top)
 	 * @return head node of merged list
 	 */
-	private Node divide(Node top, int divSize) {
+	private DoubleNode divide(DoubleNode top, int divSize) {
 		if (top == null || top.next == null || divSize <= 0)
 			return top;
 
 		int subSize = (divSize) / 2; // size of sub division
 
-		Node centerNode = getNode(top, subSize - 1);
-		Node rightList = centerNode.next;
+		DoubleNode centerNode = getNode(top, subSize - 1);
+		DoubleNode rightList = centerNode.next;
 		centerNode.next = null;
 
-		Node left = divide(top, subSize);
-		Node right = divide(rightList, subSize + (divSize % 2));
+		DoubleNode left = divide(top, subSize);
+		DoubleNode right = divide(rightList, subSize + (divSize % 2));
 
 		return merge(left, right);
 	}
@@ -413,25 +447,25 @@ public class BasicLinkedList {
 	 * @param right - right node/list to merge
 	 * @return head node of merged list
 	 */
-	private Node merge(Node left, Node right) {
+	private DoubleNode merge(DoubleNode left, DoubleNode right) {
 		if (left == null)
 			return right;
 		if (right == null)
 			return left;
 
-		Node mergedList = null; // head of the list to return
+		DoubleNode mergedList = null; // head of the list to return
 
-		Node leftPtr = left;
-		Node rightPtr = right;
-		Node previous = null;
+		DoubleNode leftPtr = left;
+		DoubleNode rightPtr = right;
+		DoubleNode previous = null;
 		while (leftPtr != null && rightPtr != null) {
-			Node current;
+			DoubleNode current;
 
 			if (leftPtr.value > rightPtr.value) {
-				current = new Node(rightPtr.value);
+				current = new DoubleNode(rightPtr.value);
 				rightPtr = rightPtr.next;
 			} else {
-				current = new Node(leftPtr.value);
+				current = new DoubleNode(leftPtr.value);
 				leftPtr = leftPtr.next;
 			}
 
@@ -439,6 +473,7 @@ public class BasicLinkedList {
 				mergedList = current;
 			} else {
 				previous.next = current;
+				current.parent = previous;
 			}
 
 			previous = current;
@@ -446,8 +481,10 @@ public class BasicLinkedList {
 
 		if (leftPtr == null) {
 			previous.next = rightPtr;
+			rightPtr.parent = previous;
 		} else {
 			previous.next = leftPtr;
+			leftPtr.parent = previous;
 		}
 
 		return mergedList;
