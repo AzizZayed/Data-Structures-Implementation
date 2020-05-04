@@ -1,6 +1,6 @@
 # Data-Structures-Implementation 
 
-These are my implementations of data structures in Java from scratch. I will do it on purpose to implement most of the same functions and features as the Java [Collections](https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html) library, but my own way. This is an ongoing project, so there is always more to come. I started it April 28th, 2020. 
+These are my implementations of data structures in Java from scratch. I will do it on purpose to implement most of the same functions and features as the Java [Collections](https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html) library, but my own way. Many of the structures aren't even integrated in Java anyways. The purpose of this project is to understand how these data structures work to be able to use them efficiently later on. At the same time, I'll be doing a study of the complexity of all the data structure's features. Project started on April 28th, 2020. 
 
 Up to date implemented data structures:
 * *__LinkedList__*: File: *BasicLinkedList.java*. This is a basic [LinkedList](https://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html) data structure with a root node and every node has a pointer to the next node in the list. I implemented a simple one with only a reference to the root node. However, there are better more optimized ways of storing and using a linked list. More info in the first few lines of the *BasicLinkedList.java* file in the *dataStructures.linkedLists* package. Along with this data structure, I implemented a divide and conquer sorting algorithm, aka [MergeSort](https://en.wikipedia.org/wiki/Merge_sort). This is the best way to sort a linked list since [QuickSort](https://en.wikipedia.org/wiki/Quicksort) is slow due to random access' not being efficient with linked lists.
@@ -11,11 +11,13 @@ Up to date implemented data structures:
 
 * *__Stack__*: File: *BasicStack.java*. This is Stack class. It extends the *BasicArrayList* class and adds the needed *push()*, *pop()*, and *peek()* functions. It's similar to the [Stack](https://docs.oracle.com/javase/7/docs/api/java/util/Stack.html) class in Java collections. 
 
+* *__BinaryTree__*: File: *BinaryTree.java*. This is an abstract [Binary Tree](https://www.geeksforgeeks.org/binary-tree-set-1-introduction/) class. Two classes extend this class, *LevelBinaryTree.java* and *BinarySearchTree.java*. The Level Binary Tree is a binary tree ordered by levels, every new inserted element is added to the first available spot, hence the "level" identifier. To insert and delete elements in this tree, the goto algorithm is [Breadth First Search](https://en.wikipedia.org/wiki/Breadth-first_search). The same algorithm is used to check if a tree contains an element. The [Binary Search Tree](https://www.geeksforgeeks.org/binary-search-tree-data-structure/) is a tree where every left node is smaller than it's parent node and every right node is bigger than its parent node. This order is called inorder. Since this tree is "sorted" in a way, we can take advantage of this property and make super efficient algorithms for searching, adding and deleting. This algorithm looks like a mix of Binary Search and [Depth First Search](https://en.wikipedia.org/wiki/Depth-first_search).
+
 What is to come next?
-* [Binary Trees](https://www.geeksforgeeks.org/binary-tree-set-1-introduction/) and [Binary Search Trees](https://www.geeksforgeeks.org/binary-search-tree-data-structure/)
 * [HashTables](https://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html) and [HashSets](https://docs.oracle.com/javase/7/docs/api/java/util/HashSet.html)
+* [Min Heaps and Max Heaps](https://en.wikipedia.org/wiki/Min-max_heap)
 * [Graphs](https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/)
-* Tries
+* [Tries](https://en.wikipedia.org/wiki/Trie)
 
 Every sub-package has a tester class where I test every function and feature. Those classes are very messy. However, they are not meant to be neat, they are just for testing purposes. Also, every function has it's run-time and space complexity written next to the declaration.
 

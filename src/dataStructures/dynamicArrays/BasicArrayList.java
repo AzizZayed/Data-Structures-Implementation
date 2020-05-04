@@ -169,7 +169,8 @@ public class BasicArrayList {
 	 * remove the last element of the list
 	 */
 	public void removeLast() { // Ot(1)
-		size--;
+		if (size != 0)
+			size--;
 	}
 
 	/**

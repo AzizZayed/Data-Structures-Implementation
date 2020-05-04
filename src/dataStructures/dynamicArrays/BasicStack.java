@@ -26,6 +26,9 @@ public class BasicStack extends BasicArrayList {
 	 * @return the top element
 	 */
 	public int pop() { // Ot(1)
+		if (getSize() == 0)
+			throw new IndexOutOfBoundsException("Can't pop from an empty stack");
+
 		int last = get(getSize() - 1);
 		removeLast();
 		return last;
@@ -37,6 +40,9 @@ public class BasicStack extends BasicArrayList {
 	 * @return the top element
 	 */
 	public int peek() { // Ot(1)
+		if (getSize() == 0)
+			throw new IndexOutOfBoundsException("Can't peek in an empty stack");
+		
 		return get(getSize() - 1);
 	}
 }

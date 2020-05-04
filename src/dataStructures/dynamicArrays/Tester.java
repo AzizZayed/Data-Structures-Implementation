@@ -6,7 +6,6 @@ public class Tester {
 	public static void main(String[] args) {
 		testArrayList();
 		testStack();
-
 	}
 
 	public static void printInfo(BasicArrayList list) {
@@ -25,12 +24,22 @@ public class Tester {
 		for (int i = 0; i < max; i++) {
 			System.out.println("Pushing " + i);
 			stack.push(i);
+			printInfo(stack);
 		}
 		printInfo(stack);
 		System.out.println("Peeking last element: " + stack.peek());
 		for (int i = 0; i < max; i++) {
 			System.out.println("Poping " + stack.pop());
+			printInfo(stack);
 		}
+
+		max = 14;
+		for (int i = 0; i < max; i++) {
+			int val = (int) (Math.random() * max);
+			stack.push(val);
+		}
+		printInfo(stack);
+		stack.push(971269);
 		printInfo(stack);
 	}
 
