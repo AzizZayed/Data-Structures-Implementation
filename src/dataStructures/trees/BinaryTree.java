@@ -133,6 +133,20 @@ public abstract class BinaryTree {
 		}
 		System.out.println("]");
 	}
+	
+	/**
+	 * remove the value at the root and get the value
+	 * 
+	 * @return the value of the root
+	 */
+	public int pop() {
+		if (root == null)
+			throw new NullPointerException("Tree is empty. There is no head.");
+
+		int val = root.value;
+		delete(val);
+		return val;
+	}
 
 	/*
 	 * clear the tree
@@ -154,13 +168,6 @@ public abstract class BinaryTree {
 	 * @param value - the value we want to delete
 	 */
 	public abstract void delete(int value);
-
-	/**
-	 * remove the value at the root and get the value
-	 * 
-	 * @return the value of the root
-	 */
-	public abstract int pop();
 
 	/**
 	 * checks if the tree contains a value

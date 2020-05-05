@@ -15,8 +15,9 @@ Up to date implemented data structures:
 
 * *__HashSet__* & *__HashTable__*: Files: *HashTable.java* & *HashSet.java*. These are classes that represent the functionality of [Hash Tables](https://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html) and [Hash Sets](https://docs.oracle.com/javase/7/docs/api/java/util/HashSet.html). A Set is a unordered and unindexed collection. A Hash Table or Dictionary is a unordered collection of key-value pairs. Look up, adding, getting, setting and removing are done in constant time with these data structures.
 
+* *__Heap__*: File: *Heap.java*. In this file, there a 2 declared static classes: MaxHeap and MinHeap. A [Heap](https://en.wikipedia.org/wiki/Heap_(data_structure)) is a tree-based data structure that holds a specific ordering property. A Min Heap has a property that every parent node is smaller or equal to the children node. So the root node is the smallest. A Max Heap has the property that every parent is bigger or equal to the children nodes. So the root node ia the biggest. 
+
 What is to come next?
-* [Min Heaps and Max Heaps](https://en.wikipedia.org/wiki/Min-max_heap)
 * [Graphs](https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/)
 * [Tries](https://en.wikipedia.org/wiki/Trie)
 

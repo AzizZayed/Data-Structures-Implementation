@@ -40,7 +40,6 @@ public class BinarySearchTree extends BinaryTree {
 	public void delete(int value) {
 		if (root == null)
 			throw new NullPointerException("Tree is empty. There is no root.");
-
 		root = removeNode(root, value);
 	}
 
@@ -86,20 +85,9 @@ public class BinarySearchTree extends BinaryTree {
 	}
 
 	@Override
-	public int pop() {
-		if (root == null)
-			throw new NullPointerException("Tree is empty. There is no root.");
-
-		int val = root.value;
-		delete(val);
-		return val;
-	}
-
-	@Override
 	public boolean contains(int value) {
 		if (root == null)
 			throw new NullPointerException("Tree is empty. There is no root.");
-
 		return contains(root, value);
 	}
 
@@ -119,7 +107,6 @@ public class BinarySearchTree extends BinaryTree {
 				return contains(current.left, value);
 			else if (current.right != null)
 				return contains(current.right, value);
-
 		return false;
 	}
 }

@@ -40,7 +40,7 @@ public class LevelBinaryTree extends BinaryTree {
 	@Override
 	public void delete(int value) {
 		if (root == null)
-			return;
+			throw new NullPointerException("Tree is empty. There is no root.");
 
 		if (root.value == value && root.left == null && root.right == null) {
 			root = null;
@@ -102,16 +102,6 @@ public class LevelBinaryTree extends BinaryTree {
 				} else
 					queue.add(current.right);
 		}
-	}
-
-	@Override
-	public int pop() {
-		if (root == null)
-			throw new NullPointerException("Tree is empty. There is no head.");
-
-		int val = root.value;
-		delete(val);
-		return val;
 	}
 
 	@Override
