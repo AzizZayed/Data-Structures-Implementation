@@ -11,19 +11,12 @@ import java.util.Arrays;
  */
 public class Tester {
 	public static void main(String[] args) {
-		testLinkedList();
+		testSingleLinkedList();
 		testDoubleLinkedList();
 	}
 
-	public static void printInfo(BasicLinkedList list) {
-		System.out.print("The List: ");
-		list.print();
-		System.out.println("Size: " + list.getSize());
-	}
-
-	public static void printInfo(DoublyLinkedList list) {
-		System.out.print("The List: ");
-		list.print();
+	public static void printInfo(LinkedList list) {
+		System.out.print("The List: " + list);
 		System.out.println("Size: " + list.getSize());
 	}
 
@@ -105,7 +98,7 @@ public class Tester {
 
 		// test peekfirst and peeklast
 		System.out.print("The List before peeks: ");
-		list.print();
+		System.out.print(list);
 
 		System.out.println("Testing peeks:");
 		System.out.println("First: " + list.peekFirst());
@@ -185,15 +178,15 @@ public class Tester {
 		printInfo(list);
 		System.out.print("The Internally Reversed List: ");
 		list.internalReverse();
-		list.print();
+		System.out.print(list);
 
 		// sorting test
 		System.out.print("Sorted list: ");
 		list.sort();
-		list.print();
+		System.out.print(list);
 	}
 
-	public static void testLinkedList() {
+	public static void testSingleLinkedList() {
 		System.out.println("///////////////TEST SINGLE LINKED LIST\\\\\\\\\\\\\\");
 		BasicLinkedList list = new BasicLinkedList();
 
@@ -266,8 +259,7 @@ public class Tester {
 			list.append(i);
 
 		// test peekfirst and peeklast
-		System.out.print("The List before peeks: ");
-		list.print();
+		System.out.print("The List before peeks: " + list);
 
 		System.out.println("Testing peeks:");
 		System.out.println("First: " + list.peekFirst());
@@ -290,13 +282,13 @@ public class Tester {
 		// test insertion
 		System.out.println("Insertions:");
 		list.insert(-11, 0);
-		list.print();
+		System.out.print(list);
 
 		list.insert(-11, list.getSize() - 1);
-		list.print();
+		System.out.print(list);
 
 		list.insert(-11, 5);
-		list.print();
+		System.out.print(list);
 
 		// test removal with index
 		printInfo(list);
@@ -318,13 +310,9 @@ public class Tester {
 		// test reversing list
 		printInfo(list);
 
-		System.out.print("The Reversed List: ");
-		list.reverse().print();
-
-		System.out.print("The Internally Reversed List: ");
 		list.internalReverse();
-		list.print();
-
+		System.out.print("The Internally Reversed List: " + list);
+		
 		list.clear();
 
 		for (int i = 0; i <= 15; i++) {
@@ -333,10 +321,8 @@ public class Tester {
 		}
 
 		// sorting test
-		System.out.print("New list: ");
-		list.print();
-		System.out.print("Sorted list: ");
+		System.out.print("New list: " + list);
 		list.sort();
-		list.print();
+		System.out.print("Sorted list: " + list);
 	}
 }

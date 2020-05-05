@@ -9,12 +9,12 @@ package dataStructures.linkedLists;
  * instead of linear time. The removeLast() method can also be optimized if we
  * had this pointer and also a pointer to the parent node. Most of these
  * performance issues are solved with a double linked list with a pointer to the
- * last Node.
+ * last SingleNode.
  * 
  * @author Zayed
  * 
  */
-public class BasicLinkedList {
+public class BasicLinkedList extends LinkedList {
 
 	/**
 	 * The node class: the elements of the list
@@ -22,105 +22,70 @@ public class BasicLinkedList {
 	 * @author Zayed
 	 *
 	 */
-	private class Node {
-		public Node next;
-		public int value;
+	protected class SingleNode extends Node {
+		public SingleNode next;
 
 		/**
 		 * constructor
 		 * 
 		 * @param value - value of the node
 		 */
-		public Node(int value) {
-			this.value = value;
+		public SingleNode(int value) {
+			super(value);
 			next = null;
 		}
-
-		/**
-		 * print the node and the children
-		 */
-		public void print() {
-			if (next == null)
-				System.out.print(value + "]");
-			else {
-				System.out.print(value + ", ");
-				next.print();
-			}
-		}
-
-		/**
-		 * Add the value to the end
-		 * 
-		 * @param val - value to add
-		 */
-		public void add(int val) {
-			if (next == null) {
-				next = new Node(val);
-			} else {
-				next.add(val);
-			}
-		}
 	}
 
-	private Node head; // root
-	private int size = 0; // size of the list
+	protected SingleNode head; // root
 
-	/**
-	 * print linked list
-	 */
-	public void print() { // O(n)
-		System.out.print("[");
-		if (head == null)
-			System.out.print("]");
-		else
-			head.print();
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		SingleNode current = head;
+
+		sb.append("[");
+		while (current != null) {
+			sb.append(current.value + (current.next == null ? "" : ", "));
+			current = current.next;
+		}
+		sb.append("]");
 		String h = head == null ? "null" : Integer.toString(head.value);
-		System.out.println(" \nHead: " + h);
+		sb.append(" \nHead: " + h + "\n");
+
+		return sb.toString();
 	}
 
-	/**
-	 * add value to the end of the list
-	 * 
-	 * @param val - value to add
-	 */
-	public void append(int val) { // O(n)
+	@Override
+	public void append(int value) { // O(n)
 		if (head == null) {
-			head = new Node(val);
+			head = new SingleNode(value);
 		} else {
-			head.add(val);
+			SingleNode current = head;
+			while (current.next != null)
+				current = current.next;
+			current.next = new SingleNode(value);
 		}
-
 		size++;
 	}
 
-	/**
-	 * add value to the start of the array
-	 * 
-	 * @param val - value to add
-	 */
-	public void prepend(int val) { // O(1)
+	@Override
+	public void prepend(int value) { // O(1)
 		if (head == null) {
-			head = new Node(val);
+			head = new SingleNode(value);
 		} else {
-			Node newHead = new Node(val);
+			SingleNode newHead = new SingleNode(value);
 			newHead.next = head;
 			head = newHead;
 		}
-
 		size++;
 	}
 
-	/**
-	 * check if the list contains a value
-	 * 
-	 * @param val - value to add
-	 * @return true if the list contains the value, false otherwise
-	 */
-	public boolean contains(int val) { // O(n) worst case
+	@Override
+	public boolean contains(int value) { // O(n) worst case
 		if (head != null) {
-			Node current = head;
+			SingleNode current = head;
 			while (current != null) {
-				if (current.value == val)
+				if (current.value == value)
 					return true;
 				current = current.next;
 			}
@@ -128,12 +93,7 @@ public class BasicLinkedList {
 		return false;
 	}
 
-	/**
-	 * get the value at the specified index
-	 * 
-	 * @param index - the index at which you want to retrieve an element
-	 * @return the value at the specified index
-	 */
+	@Override
 	public int get(int index) { // O(index), O(n) worst case
 		return getNode(head, index).value;
 	}
@@ -147,29 +107,24 @@ public class BasicLinkedList {
 	 * @param index - the index at which you want to retrieve the node
 	 * @return the node at the specified index
 	 */
-	private Node getNode(Node top, int index) {
+	private SingleNode getNode(SingleNode top, int index) {
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
 		if (index == 0)
 			return top;
 
-		Node current = top.next;
+		SingleNode current = top.next;
 		for (int i = 1; i < index; i++)
 			current = current.next;
 
 		return current;
 	}
 
-	/**
-	 * pop the head off the list, a NullPointerException is thrown if the head is
-	 * null
-	 * 
-	 * @return the value at the head of the list
-	 */
+	@Override
 	public int popHead() { // O(1)
 		if (head != null) {
-			Node poppedHead = head;
+			SingleNode poppedHead = head;
 			head = head.next;
 			size--;
 			return poppedHead.value;
@@ -178,9 +133,7 @@ public class BasicLinkedList {
 		throw new NullPointerException("List empty");
 	}
 
-	/**
-	 * remove the last element in the list
-	 */
+	@Override
 	public void removeLast() { // O(n)
 		if (head == null)
 			return;
@@ -190,23 +143,15 @@ public class BasicLinkedList {
 		else if (size == 2)
 			head.next = null;
 		else {
-			Node current = head;
+			SingleNode current = head;
 			while (current.next.next != null)
 				current = current.next;
-
 			current.next = null;
 		}
-
 		size--;
 	}
 
-	/**
-	 * remove the value at the specified index, this method throws a
-	 * IndexOutOfBoundsException if the index is not bounded to between 0 and the
-	 * size of the list
-	 * 
-	 * @param index - the index at which we wish to remove the element
-	 */
+	@Override
 	public void removeIndex(int index) { // O(index), O(n) worst case
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
@@ -216,7 +161,7 @@ public class BasicLinkedList {
 		else if (index == size - 1)
 			removeLast();
 		else {
-			Node current = head;
+			SingleNode current = head;
 			for (int i = 0; i < index - 1; i++)
 				current = current.next;
 
@@ -225,41 +170,29 @@ public class BasicLinkedList {
 		}
 	}
 
-	/**
-	 * insert a value at the specified index, this method throws a
-	 * IndexOutOfBoundsException if the index is not bounded to between 0 and the
-	 * size of the list
-	 * 
-	 * @param val   - value to add
-	 * @param index - the index at which we wish to add an element
-	 */
-	public void insert(int val, int index) { // O(index), O(n) worst case
+	@Override
+	public void insert(int value, int index) { // O(index), O(n) worst case
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
 		if (index == 0)
-			prepend(val);
+			prepend(value);
 		else if (index == size - 1)
-			append(val);
+			append(value);
 		else {
-			Node newNode = new Node(val);
+			SingleNode newSingleNode = new SingleNode(value);
 
-			Node current = head;
+			SingleNode current = head;
 			for (int i = 0; i < index - 1; i++)
 				current = current.next;
 
-			newNode.next = current.next;
-			current.next = newNode;
+			newSingleNode.next = current.next;
+			current.next = newSingleNode;
 			size++;
 		}
 	}
 
-	/**
-	 * peek to see the head/first element from the list, a NullPointerException is
-	 * thrown if the head is null
-	 * 
-	 * @return the head/first element from the list
-	 */
+	@Override
 	public int peekFirst() { // O(1)
 		if (head != null)
 			return head.value;
@@ -267,17 +200,12 @@ public class BasicLinkedList {
 		throw new NullPointerException("List empty");
 	}
 
-	/**
-	 * peek to see the last element from the list, a NullPointerException is thrown
-	 * if the head is null
-	 * 
-	 * @return the last element from the list
-	 */
+	@Override
 	public int peekLast() { // O(n)
 		if (head == null)
 			throw new NullPointerException("List empty");
 
-		Node current = head;
+		SingleNode current = head;
 		while (current.next != null) {
 			current = current.next;
 		}
@@ -285,37 +213,13 @@ public class BasicLinkedList {
 		return current.value;
 	}
 
-	/**
-	 * clear the linked list
-	 */
+	@Override
 	public void clear() { // O(1)
 		head = null;
 		size = 0;
 	}
 
-	/**
-	 * get the size of the list
-	 * 
-	 * @return the size of the list
-	 */
-	public int getSize() { // O(1)
-		return size;
-	}
-
-	/**
-	 * test if the list is empty
-	 * 
-	 * @return true if the list is empty
-	 */
-	public boolean isEmpty() {
-		return (size == 0);
-	}
-
-	/**
-	 * transform the linked list into an array
-	 * 
-	 * @return the array containing the elements of the list
-	 */
+	@Override
 	public int[] toArray() { // Ot(n), Os(n)
 		if (head == null)
 			throw new NullPointerException("List empty");
@@ -323,7 +227,7 @@ public class BasicLinkedList {
 		int[] list = new int[size];
 		int i = 0;
 
-		Node current = head;
+		SingleNode current = head;
 		list[i] = head.value;
 
 		while (current.next != null) {
@@ -334,31 +238,9 @@ public class BasicLinkedList {
 		return list;
 	}
 
-	/**
-	 * reverse the linked list into a separate linked list
-	 * 
-	 * @return the reversed linked list
-	 */
-	public BasicLinkedList reverse() { // Ot(n), Os(n)
-		BasicLinkedList reversedList = new BasicLinkedList();
-
-		if (head == null)
-			return reversedList;
-
-		Node current = head;
-		while (current != null) {
-			reversedList.prepend(current.value);
-			current = current.next;
-		}
-
-		return reversedList;
-	}
-
-	/**
-	 * reverse this linked list
-	 */
+	@Override
 	public void internalReverse() { // Ot(n), Os(1)
-		Node previous, current, next;
+		SingleNode previous, current, next;
 
 		previous = null;
 		current = head;
@@ -373,9 +255,7 @@ public class BasicLinkedList {
 		head = previous;
 	}
 
-	/**
-	 * sort the array using merge sort
-	 */
+	@Override
 	public void sort() { // Ot(nlogn), Os(n)
 		if (head == null || size < 2)
 			return;
@@ -390,18 +270,18 @@ public class BasicLinkedList {
 	 * @param divSize - the size of the given list (top)
 	 * @return head node of merged list
 	 */
-	private Node divide(Node top, int divSize) {
+	private SingleNode divide(SingleNode top, int divSize) {
 		if (top == null || top.next == null || divSize <= 0)
 			return top;
 
 		int subSize = (divSize) / 2; // size of sub division
 
-		Node centerNode = getNode(top, subSize - 1);
-		Node rightList = centerNode.next;
+		SingleNode centerNode = getNode(top, subSize - 1);
+		SingleNode rightList = centerNode.next;
 		centerNode.next = null;
 
-		Node left = divide(top, subSize);
-		Node right = divide(rightList, subSize + (divSize % 2));
+		SingleNode left = divide(top, subSize);
+		SingleNode right = divide(rightList, subSize + (divSize % 2));
 
 		return merge(left, right);
 	}
@@ -413,25 +293,25 @@ public class BasicLinkedList {
 	 * @param right - right node/list to merge
 	 * @return head node of merged list
 	 */
-	private Node merge(Node left, Node right) {
+	private SingleNode merge(SingleNode left, SingleNode right) {
 		if (left == null)
 			return right;
 		if (right == null)
 			return left;
 
-		Node mergedList = null; // head of the list to return
+		SingleNode mergedList = null; // head of the list to return
 
-		Node leftPtr = left;
-		Node rightPtr = right;
-		Node previous = null;
+		SingleNode leftPtr = left;
+		SingleNode rightPtr = right;
+		SingleNode previous = null;
 		while (leftPtr != null && rightPtr != null) {
-			Node current;
+			SingleNode current;
 
 			if (leftPtr.value > rightPtr.value) {
-				current = new Node(rightPtr.value);
+				current = new SingleNode(rightPtr.value);
 				rightPtr = rightPtr.next;
 			} else {
-				current = new Node(leftPtr.value);
+				current = new SingleNode(leftPtr.value);
 				leftPtr = leftPtr.next;
 			}
 

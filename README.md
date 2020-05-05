@@ -13,8 +13,9 @@ Up to date implemented data structures:
 
 * *__BinaryTree__*: File: *BinaryTree.java*. This is an abstract [Binary Tree](https://www.geeksforgeeks.org/binary-tree-set-1-introduction/) class. Two classes extend this class, *LevelBinaryTree.java* and *BinarySearchTree.java*. The Level Binary Tree is a binary tree ordered by levels, every new inserted element is added to the first available spot, hence the "level" identifier. To insert and delete elements in this tree, the goto algorithm is [Breadth First Search](https://en.wikipedia.org/wiki/Breadth-first_search). The same algorithm is used to check if a tree contains an element. The [Binary Search Tree](https://www.geeksforgeeks.org/binary-search-tree-data-structure/) is a tree where every left node is smaller than it's parent node and every right node is bigger than its parent node. This order is called inorder. Since this tree is "sorted" in a way, we can take advantage of this property and make super efficient algorithms for searching, adding and deleting. This algorithm looks like a mix of Binary Search and [Depth First Search](https://en.wikipedia.org/wiki/Depth-first_search).
 
+* *__HashSet__* & *__HashTable__*: Files: *HashTable.java* & *HashSet.java*. These are classes that represent the functionality of [Hash Tables](https://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html) and [Hash Sets](https://docs.oracle.com/javase/7/docs/api/java/util/HashSet.html). A Set is a unordered and unindexed collection. A Hash Table or Dictionary is a unordered collection of key-value pairs. Look up, adding, getting, setting and removing are done in constant time with these data structures.
+
 What is to come next?
-* [HashTables](https://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html) and [HashSets](https://docs.oracle.com/javase/7/docs/api/java/util/HashSet.html)
 * [Min Heaps and Max Heaps](https://en.wikipedia.org/wiki/Min-max_heap)
 * [Graphs](https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/)
 * [Tries](https://en.wikipedia.org/wiki/Trie)

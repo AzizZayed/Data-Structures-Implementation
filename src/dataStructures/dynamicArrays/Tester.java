@@ -9,8 +9,7 @@ public class Tester {
 	}
 
 	public static void printInfo(BasicArrayList list) {
-		System.out.print("List: ");
-		list.print();
+		System.out.print("List: " + list);
 		System.out.println("Size: " + list.getSize());
 		System.out.println("Capacity: " + list.getCapacity());
 	}
@@ -133,13 +132,13 @@ public class Tester {
 		// set
 		System.out.println("Set index 2 to 2: ");
 		list.set(2, 2);
-		list.print();
+		System.out.print(list);
 		System.out.println("Set index 1 to 1: ");
 		list.set(1, 1);
-		list.print();
+		System.out.print(list);
 		System.out.println("Set index 0 to 0: ");
 		list.set(0, 0);
-		list.print();
+		System.out.print(list);
 		try {
 			list.set(7, 7);
 		} catch (IndexOutOfBoundsException e) {
@@ -167,11 +166,10 @@ public class Tester {
 		}
 
 		// sorting test
-		System.out.print("New list: ");
-		list.print();
+		System.out.print("New list: " + list);
 		System.out.print("Sorted list: ");
 		list.sort();
-		list.print();
+		System.out.print(list);
 
 		// searching with binary search
 		System.out.println("Binary Search:");

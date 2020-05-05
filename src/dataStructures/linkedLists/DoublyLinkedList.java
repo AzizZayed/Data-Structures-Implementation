@@ -7,7 +7,7 @@ package dataStructures.linkedLists;
  * @author Zayed
  *
  */
-public class DoublyLinkedList {
+public class DoublyLinkedList extends LinkedList {
 
 	/**
 	 * The double node class: the elements of the doubly linked lists
@@ -15,9 +15,8 @@ public class DoublyLinkedList {
 	 * @author Zayed
 	 *
 	 */
-	private class DoubleNode {
-		public DoubleNode parent, next; // pointers to surrounding nodes
-		public int value; // value of the node
+	private class DoubleNode extends Node {
+		public DoubleNode next, parent; // pointers to the parent node
 
 		/**
 		 * constructor
@@ -25,65 +24,45 @@ public class DoublyLinkedList {
 		 * @param value - value of the node
 		 */
 		public DoubleNode(int value) {
-			this.value = value;
+			super(value);
 			next = parent = null;
 		}
-
-		/**
-		 * print the node and the children
-		 */
-		public void printForwards() {
-			if (next == null)
-				System.out.print(value + "]");
-			else {
-				System.out.print(value + ", ");
-				next.printForwards();
-			}
-		}
-
-		/**
-		 * print the node and the children
-		 */
-		public void printBackwards() {
-			if (parent == null)
-				System.out.print(value + "]");
-			else {
-				System.out.print(value + ", ");
-				parent.printBackwards();
-			}
-		}
 	}
 
-	private DoubleNode head, tail; // root and last element;
-	private int size; // size of the list
+	private DoubleNode head, tail; // root and last element
 
-	/**
-	 * print linked list
-	 */
-	public void print() { // O(n)
-		System.out.print("\nForward: [");
-		if (head == null)
-			System.out.print("]");
-		else
-			head.printForwards();
-		System.out.print(" \nBackward: [");
-		if (tail == null)
-			if (head != null)
-				head.printBackwards();
-			else
-				System.out.print("]");
-		else
-			tail.printBackwards();
+	@Override
+	public String toString() { // O(n)
+		StringBuilder sb = new StringBuilder();
+		DoubleNode current;
+
+		sb.append("\nForward: [");
+		current = head;
+		while (current != null) {
+			sb.append(current.value + (current.next == null ? "" : ", "));
+			current = current.next;
+		}
+		sb.append("]");
+		sb.append(" \nBackward: [");
+		if (tail == null && head != null)
+			sb.append(head.value);
+		else {
+			current = tail;
+			while (current != null) {
+				sb.append(current.value + (current.parent == null ? "" : ", "));
+				current = current.parent;
+			}
+		}
+		sb.append("]");
+
 		String h = head == null ? "null" : Integer.toString(head.value);
 		String t = tail == null ? "null" : Integer.toString(tail.value);
-		System.out.println(" \nHead: " + h + ", Tail: " + t);
+		sb.append(" \nHead: " + h + ", Tail: " + t + "\n");
+
+		return sb.toString();
 	}
 
-	/**
-	 * add value to the end of the list
-	 * 
-	 * @param value - value to add
-	 */
+	@Override
 	public void append(int value) { // O(1)
 		if (head == null) {
 			head = new DoubleNode(value);
@@ -100,11 +79,7 @@ public class DoublyLinkedList {
 		size++;
 	}
 
-	/**
-	 * add value to the start of the array
-	 * 
-	 * @param value - value to add
-	 */
+	@Override
 	public void prepend(int value) { // O(1)
 		if (head == null) {
 			head = new DoubleNode(value);
@@ -122,12 +97,7 @@ public class DoublyLinkedList {
 		size++;
 	}
 
-	/**
-	 * check if the list contains a value
-	 * 
-	 * @param value - value to add
-	 * @return true if the list contains the value, false otherwise
-	 */
+	@Override
 	public boolean contains(int value) { // O(n) worst case
 		if (head != null) {
 			DoubleNode current = head;
@@ -140,12 +110,7 @@ public class DoublyLinkedList {
 		return false;
 	}
 
-	/**
-	 * get the value at the specified index
-	 * 
-	 * @param index - the index at which you want to retrieve an element
-	 * @return the value at the specified index
-	 */
+	@Override
 	public int get(int index) {
 		return getNode(head, index).value;
 	}
@@ -159,7 +124,7 @@ public class DoublyLinkedList {
 	 * @param index - the index at which you want to retrieve the node
 	 * @return the node at the specified index
 	 */
-	private DoubleNode getNode(DoubleNode top, int index) { // O(n/2) worst case ~ O(n) 
+	private DoubleNode getNode(DoubleNode top, int index) { // O(n/2) worst case ~ O(n)
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
@@ -182,12 +147,7 @@ public class DoublyLinkedList {
 		return current;
 	}
 
-	/**
-	 * pop the head off the list, a NullPointerException is thrown if the head is
-	 * null
-	 * 
-	 * @return the value at the head of the list
-	 */
+	@Override
 	public int popHead() { // O(1)
 		if (head != null) {
 			int val = head.value;
@@ -221,9 +181,7 @@ public class DoublyLinkedList {
 		return val;
 	}
 
-	/**
-	 * remove the last element in the list
-	 */
+	@Override
 	public void removeLast() { // O(1)
 		if (size == 1)
 			popHead();
@@ -236,14 +194,8 @@ public class DoublyLinkedList {
 		size--;
 	}
 
-	/**
-	 * remove the value at the specified index, this method throws a
-	 * IndexOutOfBoundsException if the index is not bounded to between 0 and the
-	 * size of the list
-	 * 
-	 * @param index - the index at which we wish to remove the element
-	 */
-	public void removeIndex(int index) { // O(n/2) worst case ~ O(n) 
+	@Override
+	public void removeIndex(int index) { // O(n/2) worst case ~ O(n)
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
@@ -269,17 +221,18 @@ public class DoublyLinkedList {
 		}
 	}
 
-	public void insert(int val, int index) { // O(n/2) worst case ~ O(n) 
+	@Override
+	public void insert(int value, int index) { // O(n/2) worst case ~ O(n)
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
 		if (index == 0)
-			prepend(val);
+			prepend(value);
 		else if (index == size - 1)
-			append(val);
+			append(value);
 		else {
 			if (index <= size / 2) {
-				DoubleNode newNode = new DoubleNode(val);
+				DoubleNode newNode = new DoubleNode(value);
 
 				DoubleNode current = head;
 				for (int i = 0; i < index - 1; i++)
@@ -290,7 +243,7 @@ public class DoublyLinkedList {
 				current.next.parent = newNode;
 				current.next = newNode;
 			} else {
-				DoubleNode newNode = new DoubleNode(val);
+				DoubleNode newNode = new DoubleNode(value);
 
 				DoubleNode current = tail;
 				for (int i = size - 1; i > index + 1; i--)
@@ -305,12 +258,7 @@ public class DoublyLinkedList {
 		}
 	}
 
-	/**
-	 * peek to see the head/first element from the list, a NullPointerException is
-	 * thrown if the head is null
-	 * 
-	 * @return the head/first element from the list
-	 */
+	@Override
 	public int peekFirst() { // O(1)
 		if (head != null)
 			return head.value;
@@ -318,12 +266,7 @@ public class DoublyLinkedList {
 		throw new NullPointerException("List empty");
 	}
 
-	/**
-	 * peek to see the last element from the list, a NullPointerException is thrown
-	 * if the head is null
-	 * 
-	 * @return the last element from the list
-	 */
+	@Override
 	public int peekLast() { // O(1)
 		if (tail != null)
 			return tail.value;
@@ -331,37 +274,13 @@ public class DoublyLinkedList {
 			return peekFirst();
 	}
 
-	/**
-	 * clear the linked list
-	 */
+	@Override
 	public void clear() { // O(1)
 		head = tail = null;
 		size = 0;
 	}
 
-	/**
-	 * get the size of the list
-	 * 
-	 * @return the size of the list
-	 */
-	public int getSize() { // O(1)
-		return size;
-	}
-
-	/**
-	 * test if the list is empty
-	 * 
-	 * @return true if the list is empty
-	 */
-	public boolean isEmpty() { // O(1)
-		return (size == 0);
-	}
-
-	/**
-	 * transform the linked list into an array
-	 * 
-	 * @return the array containing the elements of the list
-	 */
+	@Override
 	public int[] toArray() { // Ot(n), Os(n)
 		if (head == null)
 			throw new NullPointerException("List empty");
@@ -380,9 +299,7 @@ public class DoublyLinkedList {
 		return list;
 	}
 
-	/**
-	 * reverse this linked list
-	 */
+	@Override
 	public void internalReverse() { // Ot(n), Os(1)
 		DoubleNode previous = null;
 		DoubleNode current = head;
@@ -400,9 +317,7 @@ public class DoublyLinkedList {
 		head = previous;
 	}
 
-	/**
-	 * sort the array using merge sort
-	 */
+	@Override
 	public void sort() { // Ot(nlogn), Os(n)
 		if (head == null || size < 2)
 			return;

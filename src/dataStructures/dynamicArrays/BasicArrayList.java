@@ -36,14 +36,16 @@ public class BasicArrayList {
 		return list.length;
 	}
 
-	/**
-	 * print the list
-	 */
-	public void print() { // O(n)
-		System.out.print("[");
+	@Override
+	public String toString() { // O(n)
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("[");
 		for (int i = 0; i < size - 1; i++)
-			System.out.print(list[i] + ", ");
-		System.out.print((size - 1 < 0 ? "" : list[size - 1]) + "]\n");
+			builder.append(list[i] + ", ");
+		builder.append((size - 1 < 0 ? "" : list[size - 1]) + "]\n");
+		
+		return builder.toString();
 	}
 
 	/**
