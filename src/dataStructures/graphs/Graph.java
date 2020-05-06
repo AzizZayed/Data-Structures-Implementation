@@ -1,7 +1,7 @@
 package dataStructures.graphs;
 
 /**
- * a graph structure with a bunch of nodes connected to eachother
+ * a graph structure with a bunch of nodes connected to each other
  * 
  * @author Zayed
  *
@@ -16,12 +16,20 @@ public abstract class Graph {
 	public abstract void addVertex(String str);
 
 	/**
-	 * add an edge between 2 vertices
+	 * add an edge from a to b
 	 * 
 	 * @param a - vertex to add an edge
 	 * @param b - vertex to add an edge
 	 */
 	public abstract void addEdge(String a, String b);
+
+	/**
+	 * add an edge from a to b and from b to a
+	 * 
+	 * @param a - vertex to add an edge
+	 * @param b - vertex to add an edge
+	 */
+	public abstract void addBothEdges(String a, String b);
 
 	/**
 	 * @return the number of vertices in the graph

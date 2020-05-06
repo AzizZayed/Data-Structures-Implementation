@@ -15,6 +15,6 @@ public class Tries {
 		}
 	}
 
-	private Node first;
-
+	private Map<Character, Node> root;
+	
 }
