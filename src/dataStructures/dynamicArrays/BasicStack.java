@@ -16,7 +16,7 @@ public class BasicStack extends BasicArrayList {
 	 * 
 	 * @param value - the value to push
 	 */
-	public void push(int value) { // Ot(1)
+	public void push(int value) { // O(1)
 		append(value);
 	}
 
@@ -25,7 +25,7 @@ public class BasicStack extends BasicArrayList {
 	 * 
 	 * @return the top element
 	 */
-	public int pop() { // Ot(1)
+	public int pop() { // O(1)
 		if (getSize() == 0)
 			throw new IndexOutOfBoundsException("Can't pop from an empty stack");
 
@@ -39,7 +39,7 @@ public class BasicStack extends BasicArrayList {
 	 * 
 	 * @return the top element
 	 */
-	public int peek() { // Ot(1)
+	public int peek() { // O(1)
 		if (getSize() == 0)
 			throw new IndexOutOfBoundsException("Can't peek in an empty stack");
 		

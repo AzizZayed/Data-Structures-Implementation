@@ -12,12 +12,13 @@ import java.util.LinkedList;
 public class LevelBinaryTree extends BinaryTree {
 
 	@Override
-	public void insert(int value) {
+	public void insert(int value) { // O(n) worst case, where n is the number of nodes
 		if (root == null) {
 			root = new Node(value);
 			return;
 		}
 
+		// Breadth-First Search
 		LinkedList<Node> queue = new LinkedList<Node>();
 
 		queue.add(root);
@@ -38,7 +39,7 @@ public class LevelBinaryTree extends BinaryTree {
 	}
 
 	@Override
-	public void delete(int value) {
+	public void delete(int value) { // O(n) worst case
 		if (root == null)
 			throw new NullPointerException("Tree is empty. There is no root.");
 
@@ -105,7 +106,7 @@ public class LevelBinaryTree extends BinaryTree {
 	}
 
 	@Override
-	public boolean contains(int value) {
+	public boolean contains(int value) { // O(n) worst case
 		if (root == null)
 			throw new NullPointerException("Tree is empty. There is no head.");
 

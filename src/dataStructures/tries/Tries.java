@@ -27,7 +27,7 @@ public class Tries {
 	private int nWords = 0;
 
 	@Override
-	public String toString() {
+	public String toString() { // O(n), where n is the number of nodes
 		StringBuilder sb = new StringBuilder("Words inside trie: {\n");
 		sb.ensureCapacity((nWords + 1) * 8); // capacity estimate
 		loadAsString(root, sb, "");
@@ -65,7 +65,7 @@ public class Tries {
 	 * 
 	 * @param newWord - the new word we want to add
 	 */
-	public void addWord(String newWord) {
+	public void addWord(String newWord) { // O(m), where m is the length of the string
 		addWord(root, newWord);
 	}
 
@@ -97,7 +97,7 @@ public class Tries {
 	 * @param word - the word to check
 	 * @return true if the word is in the trie
 	 */
-	public boolean isWord(String word) {
+	public boolean isWord(String word) { // O(m) worst case
 		Node current = root;
 		char[] chars = word.toCharArray();
 		for (char c : chars) {
@@ -114,7 +114,7 @@ public class Tries {
 	 * @param prefix - the prefix to check
 	 * @return true if the prefix is in the trie
 	 */
-	public boolean isPrefix(String prefix) {
+	public boolean isPrefix(String prefix) { // O(m) worst case
 		Node current = root;
 		char[] chars = prefix.toCharArray();
 		for (char c : chars) {
@@ -131,7 +131,7 @@ public class Tries {
 	 * @param prefix - the prefix
 	 * @return a string array of all the words with the given prefix
 	 */
-	public String[] getWordsFromPrefix(String prefix) {
+	public String[] getWordsFromPrefix(String prefix) { // O(nm) worst case
 		Node current = root;
 		char[] chars = prefix.toCharArray();
 		for (char c : chars) {

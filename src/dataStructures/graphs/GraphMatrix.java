@@ -15,7 +15,7 @@ public class GraphMatrix extends Graph {
 	private int size = 0; // the actual number of verticesF
 
 	@Override
-	public String toString() {
+	public String toString() { // O(n^2) where n is the number of vertices
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("\nVertices: [ ");
@@ -43,7 +43,7 @@ public class GraphMatrix extends Graph {
 	}
 
 	@Override
-	public void addVertex(String data) {
+	public void addVertex(String data) { // O(1)
 		if (size == CAPACITY)
 			return;
 
@@ -58,7 +58,7 @@ public class GraphMatrix extends Graph {
 	 * @param b  - vertex to add an edge
 	 * @param bi - if we add edges in both direction
 	 */
-	private void addEdge(String a, String b, boolean bidirectional) {
+	private void addEdge(String a, String b, boolean bidirectional) { // O(1)
 		int aIndex = indexOf(a);
 		int bIndex = indexOf(b);
 
@@ -74,12 +74,12 @@ public class GraphMatrix extends Graph {
 	}
 
 	@Override
-	public void addEdge(String a, String b) {
+	public void addEdge(String a, String b) { // O(1)
 		addEdge(a, b, false);
 	}
 
 	@Override
-	public void addBothEdges(String a, String b) {
+	public void addBothEdges(String a, String b) { // O(1)
 		addEdge(a, b, true);
 	}
 
@@ -89,7 +89,7 @@ public class GraphMatrix extends Graph {
 	 * @param s - the vertex data
 	 * @return the index of the vertex, -1 if it does not exist
 	 */
-	private int indexOf(String s) {
+	private int indexOf(String s) { // O(n)
 		for (int i = 0; i < size; i++)
 			if (vertices[i].equals(s))
 				return i;
@@ -102,12 +102,12 @@ public class GraphMatrix extends Graph {
 	}
 
 	@Override
-	public boolean contains(String data) {
+	public boolean contains(String data) { // O(n)
 		return indexOf(data) >= 0;
 	}
 
 	@Override
-	public boolean hasEdge(String a, String b) {
+	public boolean hasEdge(String a, String b) { // O(1)
 		int aIndex = indexOf(a);
 		int bIndex = indexOf(b);
 

@@ -32,7 +32,7 @@ public class DoublyLinkedList extends LinkedList {
 	private DoubleNode head, tail; // root and last element
 
 	@Override
-	public String toString() { // O(n)
+	public String toString() { // O(2n) ~ O(n), where n is the size of the list
 		StringBuilder sb = new StringBuilder();
 		DoubleNode current;
 
@@ -99,6 +99,7 @@ public class DoublyLinkedList extends LinkedList {
 
 	@Override
 	public boolean contains(int value) { // O(n) worst case
+		// linear search
 		if (head != null) {
 			DoubleNode current = head;
 			while (current != null) {
@@ -111,7 +112,7 @@ public class DoublyLinkedList extends LinkedList {
 	}
 
 	@Override
-	public int get(int index) {
+	public int get(int index) { // O(index), O(n/2) ~ O(n) worst case
 		return getNode(head, index).value;
 	}
 
@@ -124,7 +125,7 @@ public class DoublyLinkedList extends LinkedList {
 	 * @param index - the index at which you want to retrieve the node
 	 * @return the node at the specified index
 	 */
-	private DoubleNode getNode(DoubleNode top, int index) { // O(n/2) worst case ~ O(n)
+	private DoubleNode getNode(DoubleNode top, int index) { // O(n/2) worst case ~ O(n) -> when index is center element
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
@@ -339,7 +340,7 @@ public class DoublyLinkedList extends LinkedList {
 	 * @param divSize - the size of the given list (top)
 	 * @return head node of merged list
 	 */
-	private DoubleNode divide(DoubleNode top, int divSize) {
+	private DoubleNode divide(DoubleNode top, int divSize) { // Ot(nlogn), Os(n)
 		if (top == null || top.next == null || divSize <= 0)
 			return top;
 

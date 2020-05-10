@@ -22,6 +22,12 @@ public class HashSet extends HashStructure {
 	}
 
 	@Override
+	/*
+	 * O(1) for regular hashsets, O(c) for this one because the size is fixed (I did
+	 * that for simplicity purposes, this class is for education and by no means is
+	 * meant to be the most efficient), where c is the length of the linked list at
+	 * the specified index
+	 */
 	public void remove(String key) {
 		keys.remove(key);
 		int index = hashToIndex(key);
@@ -35,7 +41,7 @@ public class HashSet extends HashStructure {
 	 * 
 	 * @param key - what we want to add
 	 */
-	public void add(String key) {
+	public void add(String key) { // O(1) or O(c) worst case
 		int index = hashToIndex(key);
 		if (set[index] == null) {
 			set[index] = new LinkedList<String>();
@@ -49,7 +55,7 @@ public class HashSet extends HashStructure {
 	}
 
 	@Override
-	public String toString() {
+	public String toString() { // O(n) whre n is the length of the table, O(cn) worst case
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("Set: { ");
@@ -68,7 +74,7 @@ public class HashSet extends HashStructure {
 	}
 
 	@Override
-	public boolean contains(String key) {
+	public boolean contains(String key) { // O(1) or O(c) worst case
 		int index = hashToIndex(key);
 		LinkedList<String> list = set[index];
 		if (list == null)

@@ -25,26 +25,26 @@ public class BasicArrayList {
 	/**
 	 * @return the size of the array
 	 */
-	public int getSize() {
+	public int getSize() { // O(1)
 		return size;
 	}
 
 	/**
 	 * @return the capacity of the list
 	 */
-	public int getCapacity() {
+	public int getCapacity() { // O(1)
 		return list.length;
 	}
 
 	@Override
 	public String toString() { // O(n)
 		StringBuilder builder = new StringBuilder();
-		
+
 		builder.append("[");
 		for (int i = 0; i < size - 1; i++)
 			builder.append(list[i] + ", ");
 		builder.append((size - 1 < 0 ? "" : list[size - 1]) + "]\n");
-		
+
 		return builder.toString();
 	}
 
@@ -74,7 +74,7 @@ public class BasicArrayList {
 	 * 
 	 * @param value - the value we want to add
 	 */
-	public void append(int value) { // Ot(1)
+	public void append(int value) { // O(1) or O(n) in worst case when max capacity reached
 		list[size] = value;
 		checkCapacity();
 		sorted = false;
@@ -149,8 +149,8 @@ public class BasicArrayList {
 	 */
 	public int getIndexOf(int value) {
 		if (sorted)
-			return binarySearch(list, value, 0, size - 1);
-		return sequentialSearch(list, value, 0, size);
+			return binarySearch(list, value, 0, size - 1); // O(log(n))
+		return sequentialSearch(list, value, 0, size); // O(n)
 	}
 
 	/**
@@ -230,11 +230,11 @@ public class BasicArrayList {
 			return;
 
 		if (size < 64)
-			insertionSort(list, 0, size - 1);
+			insertionSort(list, 0, size - 1); // O(n^2)
 		else if (size < 256)
-			quicksort(list, 0, size - 1);
+			quicksort(list, 0, size - 1); // O(n log(n))
 		else
-			System.arraycopy(mergeSort(list, 0, size - 1), 0, list, 0, size);
+			System.arraycopy(mergeSort(list, 0, size - 1), 0, list, 0, size); // O(n log(n))
 
 		sorted = true;
 	}
@@ -256,7 +256,7 @@ public class BasicArrayList {
 	 * @param stop   - the end index of the search
 	 * @return the index of the target, -1 if the target does not exist
 	 */
-	private int binarySearch(int[] a, int target, int start, int stop) {
+	private int binarySearch(int[] a, int target, int start, int stop) { // O(log(n))
 		while (start <= stop) {
 			int mid = (start + stop) / 2;
 
@@ -304,7 +304,7 @@ public class BasicArrayList {
 	 * @param start - start index of the subArray
 	 * @param stop  - end index of the subArray
 	 */
-	private void quicksort(int[] a, int start, int stop) {
+	private void quicksort(int[] a, int start, int stop) { // O(n log(n))
 		if (start < stop) {
 			int pivot = division(a, start, stop);
 			quicksort(a, start, pivot - 1);
@@ -342,7 +342,7 @@ public class BasicArrayList {
 	 * @param start - start index of the array
 	 * @param stop  - end index of the array
 	 */
-	private void insertionSort(int[] a, int start, int stop) {
+	private void insertionSort(int[] a, int start, int stop) { // O(n^2)
 		for (int i = start + 1; i <= stop; i++)
 			for (int j = i; j > 0 && a[j] < a[j - 1]; j--) {
 				int temp = a[j];
@@ -359,7 +359,7 @@ public class BasicArrayList {
 	 * @param stop       - end index of the subArray
 	 * @return the merged array
 	 */
-	private int[] mergeSort(int[] listToSort, int start, int stop) {
+	private int[] mergeSort(int[] listToSort, int start, int stop) { // O(n log(n))
 		if (start == stop)
 			return new int[] { listToSort[start] };
 

@@ -39,7 +39,7 @@ public class BasicLinkedList extends LinkedList {
 	protected SingleNode head; // root
 
 	@Override
-	public String toString() {
+	public String toString() { // O(n), where n is the size of the list
 		StringBuilder sb = new StringBuilder();
 		SingleNode current = head;
 
@@ -82,6 +82,7 @@ public class BasicLinkedList extends LinkedList {
 
 	@Override
 	public boolean contains(int value) { // O(n) worst case
+		// linear search
 		if (head != null) {
 			SingleNode current = head;
 			while (current != null) {
@@ -94,7 +95,7 @@ public class BasicLinkedList extends LinkedList {
 	}
 
 	@Override
-	public int get(int index) { // O(index), O(n) worst case
+	public int get(int index) { // O(index), O(n) worst case -> when index is last element
 		return getNode(head, index).value;
 	}
 
@@ -107,7 +108,7 @@ public class BasicLinkedList extends LinkedList {
 	 * @param index - the index at which you want to retrieve the node
 	 * @return the node at the specified index
 	 */
-	private SingleNode getNode(SingleNode top, int index) {
+	private SingleNode getNode(SingleNode top, int index) { // O(n) worst case -> when index is last element
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
@@ -152,7 +153,7 @@ public class BasicLinkedList extends LinkedList {
 	}
 
 	@Override
-	public void removeIndex(int index) { // O(index), O(n) worst case
+	public void removeIndex(int index) { // O(index), O(n) worst case ~ O(n)
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index needs to be within bounds");
 
@@ -270,7 +271,7 @@ public class BasicLinkedList extends LinkedList {
 	 * @param divSize - the size of the given list (top)
 	 * @return head node of merged list
 	 */
-	private SingleNode divide(SingleNode top, int divSize) {
+	private SingleNode divide(SingleNode top, int divSize) { // Ot(nlogn), Os(n)
 		if (top == null || top.next == null || divSize <= 0)
 			return top;
 

@@ -24,6 +24,6 @@ Up to date implemented data structures:
 What is to come next?
 * [Adjacency List Graph](https://www.geeksforgeeks.org/graph-and-its-representations/)
 
-Every sub-package has a tester class where I test every function and feature. Those classes are very messy. However, they are not meant to be neat, they are just for testing purposes. Also, every function has it's run-time and space complexity written next to the declaration.
+There is a specific package where I test every function and feature. Every data structure gets it's own testing class. Those classes are quite messy. However, they are not meant to be neat, they are just for testing purposes. Also, every function has it's run-time and space complexity written next to the declaration.
 
-More in-depth explanations on my website shortly after every implementation. And perhaps even a YouTube video if it's really important to make one.  
+More in-depth explanations on my website shortly after every implementation. And perhaps even a YouTube video if it's really important to make one.

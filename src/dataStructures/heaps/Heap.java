@@ -16,7 +16,7 @@ public abstract class Heap {
 	ArrayList<Integer> list = new ArrayList<Integer>(); // the heap in the form of a list
 
 	@Override
-	public String toString() {
+	public String toString() { // O(n)
 		return "Heap: " + list.toString();
 	}
 
@@ -26,7 +26,7 @@ public abstract class Heap {
 	 * @param index - the index we wish to get the left child of
 	 * @return the index of the left child
 	 */
-	protected int getLeftIndex(int index) {
+	protected int getLeftIndex(int index) { // O(1)
 		int left = 2 * index + 1;
 		if (isValidIndex(left))
 			return left;
@@ -39,7 +39,7 @@ public abstract class Heap {
 	 * @param index - the index we wish to get the right child of
 	 * @return the index of the right child
 	 */
-	protected int getRightIndex(int index) {
+	protected int getRightIndex(int index) { // O(1)
 		int right = 2 * index + 2;
 		if (isValidIndex(right))
 			return right;
@@ -52,7 +52,7 @@ public abstract class Heap {
 	 * @param index - the index we wish to get the parent of
 	 * @return the index of the parent
 	 */
-	protected int getParentIndex(int index) {
+	protected int getParentIndex(int index) { // O(1)
 		int parent = (int) ((index - 1) / 2);
 		if (isValidIndex(parent))
 			return parent;
@@ -65,7 +65,7 @@ public abstract class Heap {
 	 * @param index - the index
 	 * @return true if the index is within bounds
 	 */
-	protected boolean isValidIndex(int index) {
+	protected boolean isValidIndex(int index) { // O(1)
 		return index >= 0 && index < list.size();
 	}
 
@@ -75,14 +75,14 @@ public abstract class Heap {
 	 * @param i - index of first element to swap
 	 * @param j - index of second element to swap
 	 */
-	protected void swap(int i, int j) {
+	protected void swap(int i, int j) { // O(1)
 		Collections.swap(list, i, j);
 	}
 
 	/**
 	 * @return the first element without removing it
 	 */
-	public int peek() {
+	public int peek() { // O(1)
 		if (list.size() == 0)
 			throw new IndexOutOfBoundsException("Can't peak in an empty heap");
 		return list.get(0);
@@ -94,7 +94,7 @@ public abstract class Heap {
 	 * @param value - the value we want to check
 	 * @return true if the heap contains the value
 	 */
-	public boolean contains(int value) {
+	public boolean contains(int value) { // O(n) worst case
 		return list.contains(value);
 	}
 
@@ -117,7 +117,7 @@ public abstract class Heap {
 	 * 
 	 * @param value - value to add
 	 */
-	public void push(int value) {
+	public void push(int value) { // O(log(n))
 		list.add(value);
 		if (list.size() == 1)
 			return;
@@ -130,7 +130,7 @@ public abstract class Heap {
 	 * 
 	 * @return the value at the head of the heap
 	 */
-	public int pop() {
+	public int pop() { // O(log(n))
 		if (list.size() == 0)
 			throw new IndexOutOfBoundsException("Can't pop off an empty heap");
 
@@ -148,7 +148,7 @@ public abstract class Heap {
 	/**
 	 * reset the heap properties from the bottom to up
 	 */
-	protected void resetUp() {
+	protected void resetUp() { // O(log(n))
 		int index = list.size() - 1;
 		int parent = getParentIndex(index);
 
@@ -162,7 +162,7 @@ public abstract class Heap {
 	/**
 	 * reset the heap properties from top to bottom
 	 */
-	protected void resetDown() {
+	protected void resetDown() { // O(log(n))
 		int index = 0;
 		int left = getLeftIndex(index);
 

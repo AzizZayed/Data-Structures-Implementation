@@ -1,8 +1,9 @@
 package dataStructures.trees;
 
 /**
- * This is a tree where every left node is smaller than it's parent node and every
- * right node is bigger than its parent node. This order is called Inorder.
+ * This is a tree where every left node is smaller than it's parent node and
+ * every right node is bigger than its parent node. This order is called
+ * Inorder.
  * 
  * @author Zayed
  *
@@ -10,7 +11,7 @@ package dataStructures.trees;
 public class BinarySearchTree extends BinaryTree {
 
 	@Override
-	public void insert(int value) {
+	public void insert(int value) { // O(log(n)), O(n) worst case, where n is the number of nodes
 		if (root == null)
 			root = new Node(value);
 		else
@@ -37,7 +38,7 @@ public class BinarySearchTree extends BinaryTree {
 	}
 
 	@Override
-	public void delete(int value) {
+	public void delete(int value) { // O(log(n)), O(n) worst case
 		if (root == null)
 			throw new NullPointerException("Tree is empty. There is no root.");
 		root = removeNode(root, value);
@@ -85,7 +86,7 @@ public class BinarySearchTree extends BinaryTree {
 	}
 
 	@Override
-	public boolean contains(int value) {
+	public boolean contains(int value) { // O(log(n)), O(n) worst case
 		if (root == null)
 			throw new NullPointerException("Tree is empty. There is no root.");
 		return contains(root, value);

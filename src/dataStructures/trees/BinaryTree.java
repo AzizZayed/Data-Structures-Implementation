@@ -48,7 +48,7 @@ public abstract class BinaryTree {
 	/**
 	 * print left -> root -> right
 	 */
-	public void printInorder() {
+	public void printInorder() { // O(n)
 		System.out.print("\nInorder: [ ");
 		printInorder(root);
 		System.out.println("]");
@@ -57,7 +57,7 @@ public abstract class BinaryTree {
 	/**
 	 * print root -> left -> right
 	 */
-	public void printPreorder() {
+	public void printPreorder() { // O(n)
 		System.out.print("\nPreorder: [ ");
 		printPreorder(root);
 		System.out.println("]");
@@ -66,7 +66,7 @@ public abstract class BinaryTree {
 	/**
 	 * print left -> right -> root
 	 */
-	public void printPostorder() {
+	public void printPostorder() { // O(n)
 		System.out.print("\nPostorder: [ ");
 		printPostorder(root);
 		System.out.println("]");
@@ -77,7 +77,7 @@ public abstract class BinaryTree {
 	 * 
 	 * @param curr - current node to print preorder
 	 */
-	private void printPreorder(Node curr) {
+	private void printPreorder(Node curr) { // O(n)
 		if (curr == null)
 			return;
 		System.out.print(curr.value + " ");
@@ -90,7 +90,7 @@ public abstract class BinaryTree {
 	 * 
 	 * @param curr - current node to print postorder
 	 */
-	private void printPostorder(Node curr) {
+	private void printPostorder(Node curr) { // O(n)
 		if (curr == null)
 			return;
 		printPostorder(curr.left);
@@ -103,7 +103,7 @@ public abstract class BinaryTree {
 	 * 
 	 * @param curr - current node to print inorder
 	 */
-	private void printInorder(Node curr) {
+	private void printInorder(Node curr) { // O(n)
 		if (curr == null)
 			return;
 		printInorder(curr.left);
@@ -114,7 +114,8 @@ public abstract class BinaryTree {
 	/**
 	 * print a level order traversal: in the order at which the elements were added
 	 */
-	public void printLevelOrder() {
+	public void printLevelOrder() { // O(n)
+		// Breadth-First Search
 		System.out.print("\nLevel Order: [ ");
 
 		if (root != null) {
@@ -133,13 +134,13 @@ public abstract class BinaryTree {
 		}
 		System.out.println("]");
 	}
-	
+
 	/**
 	 * remove the value at the root and get the value
 	 * 
 	 * @return the value of the root
 	 */
-	public int pop() {
+	public int pop() { // O(log(n)), O(n) worst case
 		if (root == null)
 			throw new NullPointerException("Tree is empty. There is no head.");
 

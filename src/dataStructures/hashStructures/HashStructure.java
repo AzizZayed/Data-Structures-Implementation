@@ -31,7 +31,7 @@ public abstract class HashStructure {
 	 * @param input - the input to hash
 	 * @return the hash code of the input
 	 */
-	private int hash(String input) {
+	private int hash(String input) { // O(1) or O(i) where i is the length of the input string
 		int code = 0;
 		for (int i = 0; i < input.length(); i++)
 			code += input.charAt(i);
@@ -61,7 +61,7 @@ public abstract class HashStructure {
 	public boolean isEmpty() {
 		return keys.isEmpty();
 	}
-	
+
 	/**
 	 * clear the data structure
 	 */

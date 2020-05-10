@@ -38,6 +38,12 @@ public class HashTable extends HashStructure {
 	}
 
 	@Override
+	/*
+	 * O(1) for regular hashtables, O(c) for this one because the size is fixed (I
+	 * did that for simplicity purposes, this class is for education and by no means
+	 * is meant to be the most efficient), where c is the length of the linked list
+	 * at the specified index
+	 */
 	public void remove(String key) {
 		keys.remove(key);
 		int index = hashToIndex(key);
@@ -56,7 +62,7 @@ public class HashTable extends HashStructure {
 	 * @param key   - key to add
 	 * @param value - value to add with the key
 	 */
-	public void add(String key, int value) {
+	public void add(String key, int value) { // O(1) or O(c) worst case
 		int index = hashToIndex(key);
 		if (table[index] == null)
 			table[index] = new LinkedList<Pair>();
@@ -73,7 +79,7 @@ public class HashTable extends HashStructure {
 	 * @param key   - key to set the value of
 	 * @param value - value to set
 	 */
-	public void set(String key, int value) {
+	public void set(String key, int value) { // O(1) or O(c) worst case
 		int index = hashToIndex(key);
 		if (table[index] == null)
 			table[index] = new LinkedList<Pair>();
@@ -90,7 +96,7 @@ public class HashTable extends HashStructure {
 	 * @param key - the key to find it's value
 	 * @return the value linked to the given key
 	 */
-	public int get(String key) {
+	public int get(String key) { // O(1) or O(c) worst case
 		int index = hashToIndex(key);
 		if (table[index] == null)
 			table[index] = new LinkedList<Pair>();
@@ -103,7 +109,7 @@ public class HashTable extends HashStructure {
 	}
 
 	@Override
-	public String toString() {
+	public String toString() { // O(n) whre n is the length of the table, O(cn) worst case
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("Table: { ");
@@ -122,7 +128,7 @@ public class HashTable extends HashStructure {
 	}
 
 	@Override
-	public boolean contains(String key) {
+	public boolean contains(String key) { // O(1) or O(c) worst case
 		int index = hashToIndex(key);
 		if (table[index] == null)
 			table[index] = new LinkedList<Pair>();
