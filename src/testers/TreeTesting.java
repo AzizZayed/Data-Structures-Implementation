@@ -1,7 +1,10 @@
-package dataStructures.trees;
+package testers;
 
-public class Tester {
+import dataStructures.trees.BinarySearchTree;
+import dataStructures.trees.BinaryTree;
+import dataStructures.trees.LevelBinaryTree;
 
+public class TreeTesting {
 	public static void main(String[] args) {
 		testLBT();
 		testBST();
@@ -61,7 +64,7 @@ public class Tester {
 			tree.insert((int) (Math.random() * 15));
 		}
 		printTree(tree);
-		
+
 		for (int i = 1; i <= 15; i++) {
 			int num = (int) (Math.random() * 15);
 			System.out.println("Tree contains " + num + " :" + tree.contains(num));

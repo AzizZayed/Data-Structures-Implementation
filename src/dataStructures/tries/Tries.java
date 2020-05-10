@@ -1,4 +1,4 @@
-package dataStructures.graphs;
+package dataStructures.tries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,16 +19,21 @@ public class Tries {
 	 *
 	 */
 	private class Node {
-		public HashMap<Character, Node> nextLetters = new HashMap<Character, Node>(); // children
+		public HashMap<Character, Node> nextLetters = new HashMap<>(); // children
 		public boolean isWord = false; // if it's the node ending a word
 	}
 
 	private Node root = new Node(); // the root of the tree
+	private int nWords = 0;
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder("Words inside trie: {\n");
+		sb.ensureCapacity((nWords + 1) * 8); // capacity estimate
 		loadAsString(root, sb, "");
+		sb.append("} Size: ");
+		sb.append(nWords);
+		sb.append("\n");
 		return sb.toString();
 	}
 
@@ -39,13 +44,20 @@ public class Tries {
 	 * @param full    - string builder object where we will load all the words
 	 * @param stack   - building prefix for every group of words with same prefix
 	 */
-	private void loadAsString(Node current, StringBuilder full, String stack) {
+	private void loadAsString(Node current, StringBuilder full, String stack) { // depth-first search
 		if (current.isWord) {
+			full.append("\t");
 			full.append(stack);
 			full.append("\n");
-			return;
 		}
 		current.nextLetters.forEach((k, v) -> loadAsString(v, full, stack + k));
+	}
+
+	/**
+	 * @return the number of words in the trie
+	 */
+	public int getSize() {
+		return nWords;
 	}
 
 	/**
@@ -64,7 +76,9 @@ public class Tries {
 	 * @param word    - the substring of the initial word to add under current node
 	 */
 	private void addWord(Node current, String word) {
-		if (word.length() == 0) {
+		if (word.isEmpty()) {
+			if (!current.isWord)
+				nWords++;
 			current.isWord = true;
 			return;
 		}
@@ -78,15 +92,6 @@ public class Tries {
 	}
 
 	/**
-	 * delete a word from the trie
-	 * 
-	 * @param word - word to delete
-	 */
-	public void deleteWord(String word) {
-		
-	}
-
-	/**
 	 * check if the string is a word in the trie
 	 * 
 	 * @param word - the word to check
@@ -94,8 +99,9 @@ public class Tries {
 	 */
 	public boolean isWord(String word) {
 		Node current = root;
-		for (int i = 0; i < word.length(); i++) {
-			current = current.nextLetters.get(word.charAt(i));
+		char[] chars = word.toCharArray();
+		for (char c : chars) {
+			current = current.nextLetters.get(c);
 			if (current == null) // means word does not exist
 				return false;
 		}
@@ -110,8 +116,9 @@ public class Tries {
 	 */
 	public boolean isPrefix(String prefix) {
 		Node current = root;
-		for (int i = 0; i < prefix.length(); i++) {
-			current = current.nextLetters.get(prefix.charAt(i));
+		char[] chars = prefix.toCharArray();
+		for (char c : chars) {
+			current = current.nextLetters.get(c);
 			if (current == null) // means prefix does not exist
 				return false;
 		}
@@ -126,12 +133,13 @@ public class Tries {
 	 */
 	public String[] getWordsFromPrefix(String prefix) {
 		Node current = root;
-		for (int i = 0; i < prefix.length(); i++) {
-			current = current.nextLetters.get(prefix.charAt(i));
+		char[] chars = prefix.toCharArray();
+		for (char c : chars) {
+			current = current.nextLetters.get(c);
 			if (current == null) // means prefix does not exist
 				return new String[0];
 		}
-		ArrayList<String> words = new ArrayList<String>();
+		ArrayList<String> words = new ArrayList<String>(nWords);
 		loadWords(current, prefix, words, "");
 		return words.toArray(new String[0]);
 	}
@@ -145,10 +153,8 @@ public class Tries {
 	 * @param stack   - building prefix for every group of words with same prefix
 	 */
 	private void loadWords(Node current, String prefix, ArrayList<String> words, String stack) {
-		if (current.isWord) {
+		if (current.isWord)
 			words.add(prefix + stack);
-			return;
-		}
 		current.nextLetters.forEach((k, v) -> loadWords(v, prefix, words, stack + k));
 	}
 }

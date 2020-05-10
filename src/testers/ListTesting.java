@@ -1,15 +1,12 @@
-package dataStructures.linkedLists;
+package testers;
 
 import java.util.Arrays;
 
-/**
- * This is a tester class, yes it's messy, it's only use is to test all the data
- * structure methods and functions and see if they work as intended
- * 
- * @author Zayed
- *
- */
-public class Tester {
+import dataStructures.linkedLists.BasicLinkedList;
+import dataStructures.linkedLists.DoublyLinkedList;
+import dataStructures.linkedLists.LinkedList;
+
+public class ListTesting {
 	public static void main(String[] args) {
 		testSingleLinkedList();
 		testDoubleLinkedList();
@@ -128,13 +125,13 @@ public class Tester {
 
 		list.insert(-11, list.getSize() - 3);
 		printInfo(list);
-		
+
 		list.insert(-11, list.getSize() - 13);
 		printInfo(list);
-		
+
 		list.insert(-11, list.getSize() - 17);
 		printInfo(list);
-		
+
 		list.insert(-11, 9);
 		printInfo(list);
 
@@ -154,20 +151,20 @@ public class Tester {
 		System.out.println("Removing at index " + (list.getSize() - 1) + ":");
 		list.removeIndex(list.getSize() - 1);
 		printInfo(list);
-		
+
 		System.out.println("Removing at index " + (list.getSize() - 5) + ":");
 		list.removeIndex(list.getSize() - 5);
 		printInfo(list);
-		
+
 		System.out.println("Removing at index " + (list.getSize() - 7) + ":");
 		list.removeIndex(list.getSize() - 7);
 		printInfo(list);
-		
+
 		System.out.println("Removing at index " + (list.getSize() - 15) + ":");
 		list.removeIndex(list.getSize() - 15);
 		printInfo(list);
 
-		// test reversing list		
+		// test reversing list
 		list.clear();
 
 		for (int i = 0; i <= 5; i++) {
@@ -312,7 +309,7 @@ public class Tester {
 
 		list.internalReverse();
 		System.out.print("The Internally Reversed List: " + list);
-		
+
 		list.clear();
 
 		for (int i = 0; i <= 15; i++) {

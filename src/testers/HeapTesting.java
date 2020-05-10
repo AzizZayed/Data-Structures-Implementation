@@ -1,18 +1,19 @@
-package dataStructures.heaps;
+package testers;
 
+import dataStructures.heaps.Heap;
 import dataStructures.heaps.Heap.MaxHeap;
 import dataStructures.heaps.Heap.MinHeap;
 
-public class Tester {
+public class HeapTesting {
 
 	public static void main(String[] args) {
 		System.out.println("///// MIN HEAP CHECK \\\\\\///");
-		MinHeap heap1 = new MinHeap();
-		testHeap(heap1);
-		
+		MinHeap minHeap = new MinHeap();
+		testHeap(minHeap);
+
 		System.out.println("///// MIN HEAP CHECK \\\\\\///");
-		MaxHeap heap2 = new MaxHeap();
-		testHeap(heap2);
+		MaxHeap maxHeap = new MaxHeap();
+		testHeap(maxHeap);
 	}
 
 	public static void testHeap(Heap heap) {

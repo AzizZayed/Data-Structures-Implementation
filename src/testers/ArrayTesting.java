@@ -1,8 +1,11 @@
-package dataStructures.dynamicArrays;
+package testers;
 
 import java.util.Arrays;
 
-public class Tester {
+import dataStructures.dynamicArrays.BasicArrayList;
+import dataStructures.dynamicArrays.BasicStack;
+
+public class ArrayTesting {
 	public static void main(String[] args) {
 		testArrayList();
 		testStack();

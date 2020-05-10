@@ -1,13 +1,10 @@
-package dataStructures.hashStructures;
+package testers;
 
-/**
- * just a tester class
- * 
- * @author Zayed
- *
- */
-public class Tester {
+import dataStructures.hashStructures.HashSet;
+import dataStructures.hashStructures.HashStructure;
+import dataStructures.hashStructures.HashTable;
 
+public class HashStructureTesting {
 	public static void main(String[] args) {
 		testSet();
 		testTable();
@@ -147,5 +144,4 @@ public class Tester {
 		table.clear();
 		print(table);
 	}
-
 }

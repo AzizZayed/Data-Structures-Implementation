@@ -18,7 +18,7 @@ public class GraphMatrix extends Graph {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("Vertices: [ ");
+		sb.append("\nVertices: [ ");
 		for (int i = 0; i < size; i++) {
 			sb.append(vertices[i]);
 			sb.append(" ");
@@ -43,11 +43,11 @@ public class GraphMatrix extends Graph {
 	}
 
 	@Override
-	public void addVertex(String str) {
+	public void addVertex(String data) {
 		if (size == CAPACITY)
 			return;
 
-		vertices[size] = str;
+		vertices[size] = data;
 		size++;
 	}
 
@@ -58,7 +58,7 @@ public class GraphMatrix extends Graph {
 	 * @param b  - vertex to add an edge
 	 * @param bi - if we add edges in both direction
 	 */
-	private void addEdge(String a, String b, boolean bi) {
+	private void addEdge(String a, String b, boolean bidirectional) {
 		int aIndex = indexOf(a);
 		int bIndex = indexOf(b);
 
@@ -69,7 +69,7 @@ public class GraphMatrix extends Graph {
 			throw new IllegalArgumentException("Element does not exist in the graph");
 
 		connections[aIndex][bIndex] = true;
-		if (bi)
+		if (bidirectional)
 			connections[bIndex][aIndex] = true;
 	}
 
@@ -102,8 +102,8 @@ public class GraphMatrix extends Graph {
 	}
 
 	@Override
-	public boolean contains(String key) {
-		return indexOf(key) >= 0;
+	public boolean contains(String data) {
+		return indexOf(data) >= 0;
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public abstract class Graph {
 	 * 
 	 * @param str - vertex data to add
 	 */
-	public abstract void addVertex(String str);
+	public abstract void addVertex(String data);
 
 	/**
 	 * add an edge from a to b
@@ -42,7 +42,7 @@ public abstract class Graph {
 	 * @param key - data of the vertex to look for
 	 * @return true if the graph contains the vertex
 	 */
-	public abstract boolean contains(String key);
+	public abstract boolean contains(String data);
 
 	/**
 	 * checks if there is an edge linking the 2 specified vertices
